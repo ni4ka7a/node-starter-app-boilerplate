@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const config = require('../config');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.js');
+const { verifyUserToken, IsAdmin, IsUser } = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -14,8 +15,9 @@ async function register(req, res) {
     const hasPassword = await bcrypt.hash(req.body.password, salt);
 
     // Create an user object
+    const name = req.body.name ? req.body.name : req.body.username;
     let user = new User({
-        email: req.body.email,
+        username: req.body.username,
         name: req.body.name,
         password: hasPassword
     })
@@ -34,14 +36,15 @@ async function register(req, res) {
 }
 
 async function login(req, res) {
-    User.findOne({ email: req.body.email }, async (err, user) => {
+    User.findOne({ username: req.body.username }, async (err, user) => {
         if (err) {
-            console.log(err)
+            console.lo
+            g(err)
         } else {
             if (user) {
                 const validPass = await bcrypt.compare(req.body.password, user.password);
                 if (!validPass) {
-                    return res.status(401).send('Invalid email or password');
+                    return res.status(401).send('Invalid username or password');
                 }
 
                 // Create and assign token
@@ -54,9 +57,14 @@ async function login(req, res) {
                 // TODO: better error handling
                 res.status(401).send('User not found');
             }
-
         }
     })
+}
+
+async function getCurrentUser(req, res) {
+    const user = await User.findOne({ _id: req.user.id });
+
+    res.status(200).send({ username: user.username });
 }
 
 /* GET users listing. */
@@ -66,5 +74,6 @@ router.get('/', function(req, res, next) {
 
 router.post('/register', register);
 router.post('/login', login);
+router.get('/current', verifyUserToken, getCurrentUser);
 
 module.exports = router;

@@ -8,6 +8,15 @@ const mongooseOptions = {
     useUnifiedTopology: true
 };
 
+const logger = {
+    error: (message, err) => {
+        console.log(`${message} error - ${err}`);
+    },
+    info: (message) => {
+        console.log(`${message}`);
+    }
+};
+
 (async function init() {
     db.on('error', err => {
         logger.error('DB Error: ', err);
