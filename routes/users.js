@@ -18,14 +18,14 @@ async function register(req, res) {
     const name = req.body.name ? req.body.name : req.body.username;
     let user = new User({
         username: req.body.username,
-        name: req.body.name,
+        name,
         password: hasPassword
-    })
+    });
 
     // Save User in the database
     user.save((err, registeredUser) => {
         if (err) {
-            console.log(err)
+            console.log(err);
         } else {
             // create payload then Generate an access token
             let payload = { id: registeredUser._id, user_type_id: req.body.user_type_id || 0 };
@@ -38,8 +38,7 @@ async function register(req, res) {
 async function login(req, res) {
     User.findOne({ username: req.body.username }, async (err, user) => {
         if (err) {
-            console.lo
-            g(err)
+            console.log(err);
         } else {
             if (user) {
                 const validPass = await bcrypt.compare(req.body.password, user.password);
@@ -66,11 +65,6 @@ async function getCurrentUser(req, res) {
 
     res.status(200).send({ username: user.username });
 }
-
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-    res.send('list of users');
-});
 
 router.post('/register', register);
 router.post('/login', login);
