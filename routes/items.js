@@ -27,10 +27,16 @@ async function createItem(req, res, next) {
     res.status(200).send(newItem);
 }
 
+async function deleteItem(req, res, next) {
+    await itemManager.deleteItem(req.params.id);
+    res.status(200).send({});
+}
+
 
 router.get('/', getItems);
 router.get('/:id', getItem);
 router.put('/:id', updateItem);
 router.post('/', createItem);
+router.delete('/:id', deleteItem);
 
 module.exports = router;

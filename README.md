@@ -13,4 +13,5 @@ TODOs:
 * add global error handling
 * add JS linter & pretifier
 * use manager instead of model in the users routes
+* rewrite both client & server in typesript
 

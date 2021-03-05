@@ -1,6 +1,6 @@
 class GenericManager {
     constructor(model) {
-        this.model =  model;
+        this.model = model;
     }
 
     // TODO: implement filtres
@@ -22,6 +22,10 @@ class GenericManager {
 
     async updateItem(id, update) {
         return this.model.updateOne({ _id: id }, update);
+    }
+
+    async deleteItem(id) {
+        return this.model.deleteOne({ _id: id });
     }
 }
 
