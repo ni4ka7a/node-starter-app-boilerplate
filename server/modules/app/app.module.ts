@@ -10,10 +10,12 @@ import { AppService } from './app.service';
 // import { UsersModule } from './users/users.module';
 // import { JwtAuthGuard } from './auth/jwt-auth.guard';
 // import { APP_GUARD } from '@nestjs/core';
+import { ItemsModule } from '../items/items.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
     // imports: [AppModule, CatsModule, MongooseModule.forRoot('mongodb://127.0.0.1:27017/niki-test'), AuthModule, UsersModule],
-    imports: [AppModule],
+    imports: [AppModule, ItemsModule, MongooseModule.forRoot('mongodb://127.0.0.1:27017/node-starter-app')],
     controllers: [AppController],
     providers: [AppService],
 })

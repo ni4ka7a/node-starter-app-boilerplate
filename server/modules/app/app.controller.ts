@@ -8,18 +8,13 @@ import { AppService } from './app.service';
 @Controller()
 export class AppController {
     // constructor(private readonly authService: AuthService) { }
+    constructor(private readonly appService: AppService) { }
 
     // @Public()
     @Get()
     @Render('index')
     root() {
-        // return this.appService.getHello();
-        return { message: 'Hello world!' };
-    }
-
-    @Get('niki')
-    getNiki(): string {
-        return JSON.stringify([]);
+        return null;
     }
 
     // @UseGuards(LocalAuthGuard)
