@@ -2,8 +2,10 @@
 
 TODOs:
 
+* add users in DB
+* implement register
+* remove old express stuff - /routes and /models
 * implement logout
-* add API for items
 * secure the items API per user
 * move the server in server folder
 * implement generic way for serialize response

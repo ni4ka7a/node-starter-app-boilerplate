@@ -13,6 +13,8 @@ async function bootstrap() {
 
     app.setViewEngine('hbs');
 
+    app.enableCors();
+
     await app.listen(8000);
 }
 bootstrap();

@@ -16,7 +16,7 @@ export const loadUser = () => (dispatch, getState) => {
     dispatch({ type: USER_LOADING });
 
     axios
-        .get('/users/current', tokenConfig(getState))
+        .get('/profile', tokenConfig(getState))
         .then((res) => {
             dispatch({
                 type: USER_LOADED,
@@ -41,7 +41,7 @@ export const login = (username, password) => (dispatch) => {
     const body = JSON.stringify({ username, password });
 
     axios
-        .post('/users/login', body, config)
+        .post('/auth/login', body, config)
         .then((res) => {
             dispatch({
                 type: LOGIN_SUCCESS,
@@ -79,7 +79,7 @@ export const tokenConfig = (getState) => {
     };
 
     if (token) {
-        config.headers['Authorization'] = `Token ${token}`;
+        config.headers['Authorization'] = `Bearer ${token}`;
     }
 
     return config;
